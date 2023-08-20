@@ -23,7 +23,7 @@ public class DBConfig {
     public DataSource getDataSource() {
         return DataSourceBuilder
                 .create()
-                .url("jdbc:postgresql://localhost:5432/feeding_monitor")
+                .url("jdbc:postgresql://localhost:5432/fuetterung-monitor")
                 .username("postgres")
                 .password("postgres")
                 .driverClassName("org.postgresql.Driver")

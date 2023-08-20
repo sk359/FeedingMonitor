@@ -4,12 +4,22 @@
   <meta charset="utf-8">
   <title>Fütterung Übersicht</title>
   <base href="/">
+  
+  <link href="/css/home.css" rel="stylesheet"/>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <meta name="theme-color" content="#1976d2">
 </head>
 <body>
-  <div th:text="${greeting}"></div>
+  <!--<div th:text="${greeting}"></div>-->
+  <div id="home-banner"><span>Fütterungen Übersicht</span></div>
+  <div id="form-wrapper">
+    <form action="#" method="post">
+      <label for="catname">Name der Katze:</label>
+      <input type="text" id="catname" name="name"/>
+      <input type="submit" value="Senden">
+    </form>
+  </div>
 </body>
 </html>
