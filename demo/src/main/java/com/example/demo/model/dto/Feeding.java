@@ -49,8 +49,9 @@ public class Feeding {
 		return feedingtime;
 	}
 	public void setFeedingtime(String feedingtimeString) {
+		feedingtimeString = feedingtimeString.replace("T", " ");
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.ENGLISH);
-
+		
 		
 		try {
 			Date date = formatter.parse(feedingtimeString);

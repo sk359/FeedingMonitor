@@ -17,6 +17,9 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.demo.model.dto.Feeding;
 import com.example.demo.model.repositories.FeedingRepository;
 
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;    
+
 // 
 
 @Controller
@@ -30,11 +33,18 @@ public class FeedingController {
 	String get(Model model, @RequestParam String catname){
 	    //mapped to hostname:port/home/
 		model.addAttribute("catname", catname);
+		model.addAttribute("newFeeding", new Feeding());		
+		
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();  
+		String nowString = dtf.format(now);
+		model.addAttribute("nowTime", nowString);
 	    return "feeding_overview";
 	}
 	  
 	@PostMapping
-	RedirectView post(@RequestBody Feeding mf, Model model, RedirectAttributes attributes){
+	RedirectView post(@ModelAttribute("newFeeding") Feeding mf, Model model, RedirectAttributes attributes){
 	    //mapped to hostname:port/home/
 		//attributes.addAttribute("catname", mf.getCatname());
 		//attributes.addFlashAttribute("catname", mf.getCatname());

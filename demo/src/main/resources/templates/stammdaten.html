@@ -1,0 +1,35 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Fütterung Stammdaten</title>
+  <base href="/">
+  
+  <link href="/css/base.css" rel="stylesheet"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="theme-color" content="#1976d2">
+</head>
+<body>
+
+<div>Stammdaten</div>
+
+<div th:if="${tableName == 'stamm_brand'}">
+<table class="table" style="width:30%">
+  <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Marke</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="row : ${rows}">
+      <td th:text="${row.getId()}"></td>
+      <td th:text="${row.getName()}"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</body>
+</html>

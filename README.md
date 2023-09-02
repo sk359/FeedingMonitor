@@ -39,7 +39,7 @@ Installierte Abhängigkeiten: Spring Boot DevTools, Spring Web, Thymeleaf, Sprin
 Templating + ORM
 
 
-
+Alternative zu Thymeleaf ist JSP (Java Server Pages), ist schon in Spring dabei
 
 
 
@@ -80,7 +80,7 @@ Migration ausführen:
 
 export JAVA_HOME="/home/stephan/openjdk/v13/jdk-13.0.2"
 
-> mvn flyway:migrate -Dflyway.configFiles=application.properties
+>  mvn flyway:migrate -Dflyway.configFiles=src/main/resources/flyway.conf
 
 
 Anmerkung: wenn Spaltennamen ohne `` dann wird CamelCase ignoriert: brandName => brandname

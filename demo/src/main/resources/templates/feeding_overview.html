@@ -4,12 +4,47 @@
   <meta charset="utf-8">
   <title>Fütterung Übersicht</title>
   <base href="/">
+  
+  <link href="/css/home.css" rel="stylesheet"/>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <meta name="theme-color" content="#1976d2">
 </head>
 <body>
-  <div th:text="${catname}"></div>
+  <div id="home-banner">
+    <span>Fütterungen für </span><span th:text="${catname}"></span>
+    <a th:href="@{~/stammdaten}">Stammdaten</a>
+  </div>
+  
+  
+  <div id="new-feeding-section">
+  <form th:action="@{'/fuetterung'}" method="post" th:object="${newFeeding}">
+  
+    <input type="hidden" id="catname" name="catname" th:value="${catname}" th:attr="name='catname'">
+  
+    <label for="brandname">Hersteller:</label>
+    <input type="text" id="brandname" th:field="*{brandname}"/>
+    
+    <label for="productname">Produkt:</label>
+    <input type="text" id="productname" th:field="*{productname}"/>
+    
+    <label for="taste">Geschmack:</label>
+    <input type="text" id="taste" th:field="*{taste}"/>
+    
+    <label title="Erlaubte Werte: trocken, nass" for="type">Nass/Trocken:</label>
+    <input type="text" id="type" th:field="*{type}"/>
+    
+    <label title="Zahl zwischen 0 und 100" for="eatenpercentage">Aufgegessen (%):</label>
+    <input min="0" max="100" type="number" id="eatenpercentage" th:field="*{eatenpercentage}"/>
+    
+    <label title="Besp: 2023-08-17 17:12" for="feedingtime">Zeit:</label>
+    <input type="datetime-local" id="feedingtime" th:attr="name='feedingtime'" th:value="${nowTime}"/>
+    
+    
+    <input type="submit" value="Senden">
+  </form>
+  
+  </div>
 </body>
 </html>
