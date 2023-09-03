@@ -300,3 +300,20 @@ th {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.075);
 }
+
+.header-banner {
+        width:100%;
+	font-size: 40px;
+	display: flex;
+	justify-content: center;
+	background-color: orange;
+	padding: 10px;
+}
+
+.stammdaten-input-with-label {
+  display: inline-grid;
+}
+
+.app-frame {
+  padding: 10px;
+}
