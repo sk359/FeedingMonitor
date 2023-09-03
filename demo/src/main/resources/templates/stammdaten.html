@@ -12,20 +12,22 @@
 </head>
 <body>
 
-<div class="header-banner">
-    <span>Stammdaten </span>    
+<div class="header-banner" style="position:relative">
+    <span>Stammdaten </span>
+    <a style="position:absolute; right:90px;" th:href="@{~/}">Zurück</a>
 </div>
 
 <div class="app-frame">
 
-<h4 th:text="${tableName}"></h4>
+<h4>
+  <span>Tabelle: </span>
+  <span th:text="${tableName}"></span>
+</h4>
 
-<div th:if="${tableName == 'stamm_brand'}">
+<div th:if="${tableName == 'stamm_brand'}" style="display:inline-flex;width:90%">
 
-<div class="stammdaten-add">
-
-<form th:action="@{'/stammdaten/stamm_brand'}" method="post">
-
+  <div class="stammdaten-add">
+    <form class="stammdaten-add-form" th:action="@{'/stammdaten/stamm_brand'}" method="post">
       <div class="stammdaten-input-with-label">  
         <label for="name">Marke:</label>
         <input type="text" id="name" name="name"/>
@@ -33,12 +35,10 @@
 
       <input type="submit" value="Senden">
 
-</form>
-
-
+  </form>
 </div>
 
-<table class="table" style="width:30%">
+<table class="table" style="width:67%;margin-left: 20px;">
   <thead class="thead-dark">
     <tr>
       <th>ID</th>
@@ -52,7 +52,7 @@
     </tr>
   </tbody>
 </table>
-</div>
+</div>  <!-- stamm_brand -->
 
 </div>
 
