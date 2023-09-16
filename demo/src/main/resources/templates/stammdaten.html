@@ -17,6 +17,14 @@
     <a style="position:absolute; right:90px;" th:href="@{~/}">Zurück</a>
 </div>
 
+<div class="header-banner" style="background-color:gray">
+  <form th:action="@{'/stammdaten/'}" method="get">
+    <input class="stammdaten-select-button" type="submit" name="tableName" value="stamm_brand" />
+    <input class="stammdaten-select-button" type="submit" name="tableName" value="stamm_product" />
+    <input class="stammdaten-select-button" type="submit" name="tableName" value="stamm_product_taste" />
+  </form>
+</div>
+
 <div class="app-frame">
 
 <h4>
@@ -35,24 +43,119 @@
 
       <input type="submit" value="Senden">
 
-  </form>
-</div>
+    </form>
+  </div>
 
-<table class="table" style="width:67%;margin-left: 20px;">
-  <thead class="thead-dark">
-    <tr>
-      <th>ID</th>
-      <th>Marke</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr th:each="row : ${rows}">
-      <td th:text="${row.getId()}"></td>
-      <td th:text="${row.getName()}"></td>
-    </tr>
-  </tbody>
-</table>
+  <table class="table" style="width:67%;margin-left: 20px;">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Marke</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="row : ${rows}">
+        <td th:text="${row.getId()}"></td>
+        <td th:text="${row.getName()}"></td>
+      </tr>
+    </tbody>
+  </table>
 </div>  <!-- stamm_brand -->
+
+<!-- stamm_product: -->
+
+<div th:if="${tableName == 'stamm_product'}" style="display:inline-flex;width:90%">
+
+  <div class="stammdaten-add">
+    <form class="stammdaten-add-form" th:action="@{'/stammdaten/stamm_product'}" method="post">
+    
+      <!-- Select foreign key relationship parent: -->
+      <label for="stammBrandId">Marke:</label>
+      <select id="stammBrandId" name="stammBrandId">        
+        <option th:each="brand : ${brands}" th:value="${brand.getId()}" th:text="${brand.getName()}"></option>      
+      </select>
+    
+      <div class="stammdaten-input-with-label">  
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"/>
+      </div>    
+      
+      <div class="stammdaten-input-with-label">  
+        <label for="food_type">Typ:</label>
+        <select id="foodType" name="foodType">
+          <option value="Hartfutter">Hartfutter</option>
+          <option value="Nassfutter">Nassfutterr</option>
+          <option value="Suppe">Suppe</option>
+        </select>
+      </div>  
+
+      <input type="submit" value="Senden">
+
+    </form>
+  </div>
+
+  <table class="table" style="width:67%;margin-left: 20px;">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Marke</th>
+        <th>Name</th>
+        <th>Art</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="row : ${rows}">
+        <td th:text="${row.getId()}"></td>
+        <td th:text="${row.getName()}"></td>
+        <td th:text="${row.getBrandName()}"></td>
+        <td th:text="${row.getFoodType()}"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>  <!-- stamm_product -->
+
+
+
+<!-- stamm_product_taste: -->
+
+<div th:if="${tableName == 'stamm_product_taste'}" style="display:inline-flex;width:90%">
+
+  <div class="stammdaten-add">
+    <form class="stammdaten-add-form" th:action="@{'/stammdaten/stamm_product_taste'}" method="post">
+    
+      <!-- Select foreign key relationship parent: -->
+      <label for="stammProductId">Marke:</label>
+      <select id="stammProductId" name="stammProductId">        
+        <option th:each="product : ${products}" th:value="${product.getId()}" th:text="${product.getName()}"></option>      
+      </select>
+    
+      <div class="stammdaten-input-with-label">  
+        <label for="taste">Geschmack:</label>
+        <input type="text" id="taste" name="taste"/>
+      </div>      
+
+      <input type="submit" value="Senden">
+
+    </form>
+  </div>
+
+  <table class="table" style="width:67%;margin-left: 20px;">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Produkt</th>
+        <th>Geschmack</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="row : ${rows}">
+        <td th:text="${row.getId()}"></td>
+        <td th:text="${row.getProduct()}"></td>
+        <td th:text="${row.getTaste()}"></td>        
+      </tr>
+    </tbody>
+  </table>
+</div>  <!-- stamm_product_taste -->
 
 </div>
 
