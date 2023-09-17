@@ -124,7 +124,7 @@
     <form class="stammdaten-add-form" th:action="@{'/stammdaten/stamm_product_taste'}" method="post">
     
       <!-- Select foreign key relationship parent: -->
-      <label for="stammProductId">Marke:</label>
+      <label for="stammProductId">Produkt:</label>
       <select id="stammProductId" name="stammProductId">        
         <option th:each="product : ${products}" th:value="${product.getId()}" th:text="${product.getName()}"></option>      
       </select>
@@ -150,8 +150,8 @@
     <tbody>
       <tr th:each="row : ${rows}">
         <td th:text="${row.getId()}"></td>
-        <td th:text="${row.getProduct()}"></td>
-        <td th:text="${row.getTaste()}"></td>        
+        <td th:text="${row.getProduct().getName()}"></td>
+        <td th:text="${row.getName()}"></td>        
       </tr>
     </tbody>
   </table>

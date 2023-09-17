@@ -11,14 +11,14 @@ import javax.persistence.Table;
 public class StammProductTaste extends Base {
 	
 	@Column(length = 32, nullable = false)	
-	private String taste;
+	private String name;
 
-	public String getTaste() {
-		return taste;
+	public String getName() {
+		return name;
 	}
 
-	public void setTaste(String taste) {
-		this.taste = taste;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	private StammProduct product;
@@ -27,6 +27,10 @@ public class StammProductTaste extends Base {
 	@JoinColumn(name="stamm_product_id", nullable=false)
 	public StammProduct getProduct() {
 		return product;
+	}
+	
+	public void setProduct(StammProduct prod) {
+		this.product = prod;
 	}
 
 }

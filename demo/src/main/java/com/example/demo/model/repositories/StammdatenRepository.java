@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.orm.Base;
 import com.example.demo.model.orm.StammBrand;
 import com.example.demo.model.orm.StammProduct;
+import com.example.demo.model.orm.StammProductTaste;
 
 
 @Repository
@@ -22,5 +23,11 @@ public interface StammdatenRepository extends JpaRepository<Base, Integer> {
 	
 	@Query("SELECT b FROM StammProduct b")
 	Collection<StammProduct> getAllProducts();
+	
+	@Query("SELECT b FROM StammProduct b WHERE b.id = :id ")
+	StammProduct getProductById(long id);
+	
+	@Query("SELECT b FROM StammProductTaste b")
+	Collection<StammProductTaste> getAllTastes();
 
 }
