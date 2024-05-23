@@ -1,54 +1,45 @@
 package com.example.demo.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
 import com.example.demo.model.dto.CatInfo;
-import com.example.demo.services.LogIn;
+
 
 /*
  * Einstiegsmaske mit Input fuer Name
  */
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/home")
 public class Catname {
 	
-	@Autowired
-	private LogIn loginService; 
 	
 	@GetMapping
-	String get(Model model){
-	    //mapped to hostname:port/home/
-		model.addAttribute("greeting", "Hallo Welt!!");
+	String get(Model model){	    
 	    return "home";
 	}
+	
+	// Multiple submits in one form => different params
+	
+	@PostMapping(params = "stammdaten")
+	public RedirectView cancelUpdateUser(HttpServletRequest request) {
+		return new RedirectView("/stammdaten");	    
+	}
 	  
-	@PostMapping
-	public RedirectView post(@ModelAttribute CatInfo cat, RedirectAttributes attributes){
-	    //mapped to hostname:port/home/
-		// redirect
-		System.out.println(cat);
-	    //return "home";
-		if (cat.getName().equals("Tobi")) {
-			loginService.setLoggedIn(true);
-			attributes.addAttribute("catname", cat.getName());
-			return new RedirectView("/fuetterung");
-		} else {
-			System.out.println("failed");
-			loginService.setLoggedIn(false);
-			return new RedirectView("/");
-		}
-	    
+	@PostMapping(params = "cat")
+	public RedirectView post(@ModelAttribute CatInfo cat, RedirectAttributes attributes){	    
+		System.out.println(cat);	    
+		attributes.addAttribute("catname", cat.getName());
+		return new RedirectView("/fuetterung");	    
 	}
 
 }

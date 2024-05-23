@@ -42,7 +42,7 @@
     <input type="datetime-local" id="feedingtime" th:attr="name='feedingtime'" th:value="${nowTime}"/>
     
     
-    <input type="submit" value="Senden">
+    <input th:disabled="${submitDisabled}" type="submit" value="Senden">
   </form>
   
   </div>

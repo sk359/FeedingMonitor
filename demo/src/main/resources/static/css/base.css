@@ -316,4 +316,18 @@ th {
 
 .app-frame {
   padding: 10px;
+  
+}
+
+.stammdaten-add {
+  width: 33%;
+  border-right: 1px solid lightgray;
+}
+
+.stammdaten-table {
+  width: 67%;
+}
+
+.stammdaten-add-form {
+  display: grid;
 }

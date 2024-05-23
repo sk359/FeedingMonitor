@@ -19,9 +19,13 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.model.dto.CatInfo;
 import com.example.demo.model.dto.Feeding;
+import com.example.demo.model.dto.ProductTasteDto;
+import com.example.demo.model.dto.StammProductDto;
 import com.example.demo.model.dto.TableColumn;
 import com.example.demo.model.dto.TableParams;
 import com.example.demo.model.orm.StammBrand;
+import com.example.demo.model.orm.StammProduct;
+import com.example.demo.model.orm.StammProductTaste;
 import com.example.demo.model.repositories.StammdatenRepository;
 
 @Controller
@@ -46,7 +50,31 @@ public class Stammdaten {
 			System.out.println(brand);
 		}
 		
-		model.addAttribute("rows", brands);
+		System.out.println(tableName);
+		
+		
+		if (tableName.equals("stamm_product")) {
+			System.out.println("Podukte");
+			model.addAttribute("brands", brands);
+			Collection<StammProduct> rows = stammRepository.getAllProducts();
+			model.addAttribute("rows", rows);
+			for (StammProduct row : rows) {
+				System.out.println(row);
+			}
+		} else if (tableName.equals("stamm_brand")) {
+			model.addAttribute("rows", brands);
+		} else if (tableName.equals("stamm_product_taste")) {
+			Collection<StammProduct> rows = stammRepository.getAllProducts();
+			/*
+			List<String> productNames = new ArrayList<String>();			
+			for (StammProduct row : rows) {
+				productNames.add(row.getName());
+			}
+			*/
+			model.addAttribute("products", rows);
+			Collection<StammProductTaste> tastes = stammRepository.getAllTastes();
+			model.addAttribute("rows", tastes);
+		}
 		/*
 		List<TableColumn> cols = new ArrayList<TableColumn>();	
 	    cols.add(new TableColumn("name", "Marke"));
@@ -71,10 +99,44 @@ public class Stammdaten {
 		return params;
 	}
 	
+	// Individual tables:
+	
 	@PostMapping(value="/stamm_brand")
 	public RedirectView post(@ModelAttribute StammBrand brand, RedirectAttributes attributes){
 		stammRepository.save(brand);
 		return new RedirectView("/stammdaten");
+	}
+	
+	@PostMapping(value="/stamm_product")
+	public RedirectView postProduct(@ModelAttribute StammProductDto productDto, RedirectAttributes attributes){
+		System.out.println(productDto);
+		StammProduct product = productFromDto(productDto);
+		stammRepository.save(product);
+		return new RedirectView("/stammdaten?name=stamm_product");
+	}
+	
+	private StammProduct productFromDto(StammProductDto dto) {
+		StammProduct product = new StammProduct();
+		product.setName(dto.getName());
+		product.setFoodType(dto.getFoodType());
+		StammBrand brand = stammRepository.getBrandById(dto.getStammBrandId());
+		product.setBrand(brand);
+		return product;
+	}
+	
+	@PostMapping(value="/stamm_product_taste")
+	public RedirectView postTaste(@ModelAttribute ProductTasteDto tasteDto, RedirectAttributes attributes){
+		StammProductTaste dbTaste = tasteFromDto(tasteDto);
+		stammRepository.save(dbTaste);
+		return new RedirectView("/stammdaten?name=stamm_product_taste");
+	}
+	
+	private StammProductTaste tasteFromDto(ProductTasteDto dto) {
+		StammProductTaste dbTaste = new StammProductTaste();
+		dbTaste.setName(dto.getTaste());		
+		StammProduct prod = stammRepository.getProductById(dto.getStammProductId());
+		dbTaste.setProduct(prod);		
+		return dbTaste;
 	}
 
 }

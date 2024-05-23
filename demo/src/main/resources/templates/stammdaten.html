@@ -12,20 +12,30 @@
 </head>
 <body>
 
-<div class="header-banner">
-    <span>Stammdaten </span>    
+<div class="header-banner" style="position:relative">
+    <span>Stammdaten </span>
+    <a style="position:absolute; right:90px;" th:href="@{~/home}">Zurück</a>
+</div>
+
+<div class="header-banner" style="background-color:gray">
+  <form th:action="@{'/stammdaten/'}" method="get">
+    <input class="stammdaten-select-button" type="submit" name="tableName" value="stamm_brand" />
+    <input class="stammdaten-select-button" type="submit" name="tableName" value="stamm_product" />
+    <input class="stammdaten-select-button" type="submit" name="tableName" value="stamm_product_taste" />
+  </form>
 </div>
 
 <div class="app-frame">
 
-<h4 th:text="${tableName}"></h4>
+<h4>
+  <span>Tabelle: </span>
+  <span th:text="${tableName}"></span>
+</h4>
 
-<div th:if="${tableName == 'stamm_brand'}">
+<div th:if="${tableName == 'stamm_brand'}" style="display:inline-flex;width:90%">
 
-<div class="stammdaten-add">
-
-<form th:action="@{'/stammdaten/stamm_brand'}" method="post">
-
+  <div class="stammdaten-add">
+    <form class="stammdaten-add-form" th:action="@{'/stammdaten/stamm_brand'}" method="post">
       <div class="stammdaten-input-with-label">  
         <label for="name">Marke:</label>
         <input type="text" id="name" name="name"/>
@@ -33,26 +43,119 @@
 
       <input type="submit" value="Senden">
 
-</form>
+    </form>
+  </div>
+
+  <table class="table" style="width:67%;margin-left: 20px;">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Marke</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="row : ${rows}">
+        <td th:text="${row.getId()}"></td>
+        <td th:text="${row.getName()}"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>  <!-- stamm_brand -->
+
+<!-- stamm_product: -->
+
+<div th:if="${tableName == 'stamm_product'}" style="display:inline-flex;width:90%">
+
+  <div class="stammdaten-add">
+    <form class="stammdaten-add-form" th:action="@{'/stammdaten/stamm_product'}" method="post">
+    
+      <!-- Select foreign key relationship parent: -->
+      <label for="stammBrandId">Marke:</label>
+      <select id="stammBrandId" name="stammBrandId">        
+        <option th:each="brand : ${brands}" th:value="${brand.getId()}" th:text="${brand.getName()}"></option>      
+      </select>
+    
+      <div class="stammdaten-input-with-label">  
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"/>
+      </div>    
+      
+      <div class="stammdaten-input-with-label">  
+        <label for="food_type">Typ:</label>
+        <select id="foodType" name="foodType">
+          <option value="Hartfutter">Hartfutter</option>
+          <option value="Nassfutter">Nassfutterr</option>
+          <option value="Suppe">Suppe</option>
+        </select>
+      </div>  
+
+      <input type="submit" value="Senden">
+
+    </form>
+  </div>
+
+  <table class="table" style="width:67%;margin-left: 20px;">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Marke</th>
+        <th>Name</th>
+        <th>Art</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="row : ${rows}">
+        <td th:text="${row.getId()}"></td>
+        <td th:text="${row.getName()}"></td>
+        <td th:text="${row.getBrandName()}"></td>
+        <td th:text="${row.getFoodType()}"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>  <!-- stamm_product -->
 
 
-</div>
 
-<table class="table" style="width:30%">
-  <thead class="thead-dark">
-    <tr>
-      <th>ID</th>
-      <th>Marke</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr th:each="row : ${rows}">
-      <td th:text="${row.getId()}"></td>
-      <td th:text="${row.getName()}"></td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<!-- stamm_product_taste: -->
+
+<div th:if="${tableName == 'stamm_product_taste'}" style="display:inline-flex;width:90%">
+
+  <div class="stammdaten-add">
+    <form class="stammdaten-add-form" th:action="@{'/stammdaten/stamm_product_taste'}" method="post">
+    
+      <!-- Select foreign key relationship parent: -->
+      <label for="stammProductId">Produkt:</label>
+      <select id="stammProductId" name="stammProductId">        
+        <option th:each="product : ${products}" th:value="${product.getId()}" th:text="${product.getName()}"></option>      
+      </select>
+    
+      <div class="stammdaten-input-with-label">  
+        <label for="taste">Geschmack:</label>
+        <input type="text" id="taste" name="taste"/>
+      </div>      
+
+      <input type="submit" value="Senden">
+
+    </form>
+  </div>
+
+  <table class="table" style="width:67%;margin-left: 20px;">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Produkt</th>
+        <th>Geschmack</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="row : ${rows}">
+        <td th:text="${row.getId()}"></td>
+        <td th:text="${row.getProduct().getName()}"></td>
+        <td th:text="${row.getName()}"></td>        
+      </tr>
+    </tbody>
+  </table>
+</div>  <!-- stamm_product_taste -->
 
 </div>
 

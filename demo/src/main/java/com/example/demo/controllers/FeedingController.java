@@ -30,11 +30,16 @@ public class FeedingController {
 	private FeedingRepository repo;
 	
 	@GetMapping
-	String get(Model model, @RequestParam String catname){
+	String get(Model model, @RequestParam(required = false) String catname){
 	    //mapped to hostname:port/home/
+		boolean submitDisabled = false; 
+		if (catname ==null) {
+			catname = "";
+			submitDisabled = true;
+		}
 		model.addAttribute("catname", catname);
-		model.addAttribute("newFeeding", new Feeding());		
-		
+		model.addAttribute("newFeeding", new Feeding());	
+		model.addAttribute("submitDisabled", submitDisabled);		
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();  
